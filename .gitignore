@@ -54,6 +54,6 @@ dkms.conf
 #Others
 *.txt
 *.bin
-*.Debug/
+Debug/
 *.launch
 *.metadata/
