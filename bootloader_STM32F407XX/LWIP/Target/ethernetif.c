@@ -41,7 +41,8 @@
 #define IFNAME1 't'
 
 /* USER CODE BEGIN 1 */
-
+#define IFNAME0 'e'
+#define IFNAME1 '0'
 /* USER CODE END 1 */
 
 /* Private variables ---------------------------------------------------------*/
@@ -190,12 +191,12 @@ static void low_level_init(struct netif *netif)
   heth.Init.Speed = ETH_SPEED_100M;
   heth.Init.DuplexMode = ETH_MODE_FULLDUPLEX;
   heth.Init.PhyAddress = LAN8742A_PHY_ADDRESS;
-  MACAddr[0] = 0x00;
-  MACAddr[1] = 0x80;
-  MACAddr[2] = 0xE1;
-  MACAddr[3] = 0x00;
-  MACAddr[4] = 0x00;
-  MACAddr[5] = 0x00;
+  MACAddr[0] = 0x4A;
+  MACAddr[1] = 0x43;
+  MACAddr[2] = 0x4F;
+  MACAddr[3] = 0x52;
+  MACAddr[4] = 0x39;
+  MACAddr[5] = 0x33;
   heth.Init.MACAddr = &MACAddr[0];
   heth.Init.RxMode = ETH_RXPOLLING_MODE;
   heth.Init.ChecksumMode = ETH_CHECKSUM_BY_HARDWARE;
@@ -719,7 +720,12 @@ __weak void ethernetif_notify_conn_changed(struct netif *netif)
   /* NOTE : This is function could be implemented in user file
             when the callback is needed,
   */
-
+	 if(netif_is_link_up(netif)){
+	  netif_set_up(netif);
+	 }
+	 else{
+	   netif_set_down(netif);
+	 }
 }
 /* USER CODE END 8 */
 #endif /* LWIP_NETIF_LINK_CALLBACK */

@@ -136,7 +136,6 @@ void udpServer_send(uint8_t * pBuffer, uint16_t length){
 	/* free the UDP connection, so we can accept new clients */
 	udp_disconnect(udp_pcb);
 
-
 }
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

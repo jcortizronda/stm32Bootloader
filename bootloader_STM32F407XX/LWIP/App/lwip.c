@@ -70,6 +70,11 @@ void MX_LWIP_Init(void)
   GATEWAY_ADDRESS[3] = 1;
 
 /* USER CODE BEGIN IP_ADDRESSES */
+#ifdef EPROM
+  IP_ADDRESS = getIpFromEprom ();
+  NETMASK_ADDRESS = getNetmaskFromEprom();
+  GATEWAY_ADDRESS = getGatewayFromEprom();
+#endif
 /* USER CODE END IP_ADDRESSES */
 
   /* Initilialize the LwIP stack without RTOS */
@@ -137,6 +142,7 @@ void MX_LWIP_Process(void)
   sys_check_timeouts();
 
 /* USER CODE BEGIN 4_3 */
+  ethernetif_set_link(&gnetif);
 /* USER CODE END 4_3 */
 }
 

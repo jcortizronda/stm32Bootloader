@@ -1116,7 +1116,6 @@ while ( conEstablished == 0 ):
     ack.append(ACK)
     sock.sendto( bytes( ack ), ( ipAddress, port ) ) 
     sock.settimeout( 1 )
-    
     try:
         data, addr = sock.recvfrom(64) # buffer size is 1024 bytes
         print( "\n   Connection established\n\n" )

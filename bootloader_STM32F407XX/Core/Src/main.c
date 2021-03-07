@@ -20,6 +20,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "crc.h"
+#include "i2c.h"
 #include "lwip.h"
 #include "gpio.h"
 
@@ -87,6 +88,7 @@ int main(void)
   MX_GPIO_Init();
   MX_CRC_Init();
   MX_LWIP_Init();
+  MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
   uint8_t bootloaderInitRam    = 0;
   uint8_t bootloaderInitButton = 0;
