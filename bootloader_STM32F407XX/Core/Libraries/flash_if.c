@@ -60,8 +60,8 @@ int8_t FLASH_If_Erase(uint32_t StartSector)
     uint32_t sectornb = 0;
     
     FLASH_EraseInitStruct.TypeErase = FLASH_TYPEERASE_SECTORS;
-    FLASH_EraseInitStruct.Sector = FLASH_SECTOR_5;
-    FLASH_EraseInitStruct.NbSectors = 7;
+    FLASH_EraseInitStruct.Sector = USER_FLASH_SECTOR_START;
+    FLASH_EraseInitStruct.NbSectors = USER_FLASH_NUMBER_SECTORS;
     FLASH_EraseInitStruct.VoltageRange = FLASH_VOLTAGE_RANGE_3;
     
     if (HAL_FLASHEx_Erase(&FLASH_EraseInitStruct, &sectornb) != HAL_OK)

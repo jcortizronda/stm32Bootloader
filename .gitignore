@@ -57,3 +57,4 @@ dkms.conf
 Debug/
 *.launch
 *.metadata/
+.settings/

@@ -79,19 +79,19 @@ static void closeFile(void *handle) {
 	Filehandle->initFlat = 0;
 	if (Filehandle->wrMode) //If the file was previously written
 	{
-		void (*jumpAddress)(void);
-
-		uint32_t mspValue = *(volatile uint32_t*) USER_FLASH_FIRST_PAGE_ADDRESS;
-
+//		void (*jumpAddress)(void);
+//
+//		uint32_t mspValue = *(volatile uint32_t*) USER_FLASH_FIRST_PAGE_ADDRESS;
+		NVIC_SystemReset();
 		//This function comes from CMSIS.
-		__set_MSP(mspValue);
-
-		uint32_t jumpToApplication = *(volatile uint32_t*) (FLASH_APP_BASE_ADDRESS + 4);
-
-		jumpAddress = (void*) jumpToApplication;
-
-		//3. jump to reset handler of the user application
-		jumpAddress();
+//		__set_MSP(mspValue);
+//
+//		uint32_t jumpToApplication = *(volatile uint32_t*) (FLASH_APP_BASE_ADDRESS + 4);
+//
+//		jumpAddress = (void*) jumpToApplication;
+//
+//		//3. jump to reset handler of the user application
+//		jumpAddress();
 
 		while (1)
 			;

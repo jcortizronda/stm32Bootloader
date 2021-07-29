@@ -93,7 +93,21 @@ def getCRC(buff, length):
             else:
                 Crc = (Crc << 1)
     return Crc
-        
+
+
+def progressBar(data):
+    
+    if (fileSize == 0):
+        actualFileSize = 0
+        percentage = 100
+    else:
+        actualFileSize = data.blocknumber*512/1024
+        percentage = data.blocknumber*512/fileSize*100
+    if (actualFileSize > (fileSize/1024)):
+        actualFileSize = fileSize/1024
+        percentage = 100
+    print("   Flashing: ", "{:.2f}".format(percentage), "%   ", "{:.1f}".format(actualFileSize), "kB /", "{:.1f}".format(fileSize/1024), "kB", end='\r')
+    return  
 #----------------------------- Command Processing----------------------------------------
 
 def process_COMMAND_BL_GET_VER( length, data ):
@@ -531,6 +545,7 @@ def decodeMenuCommandCode(command):
             return
 
     elif( command == 9 ):
+        global fileSize
         print("\n   Command == > BL_UPDATE_FLASH ")
         fileName =  input( '\n   Enter file name (with bin extension): ' )
         
@@ -553,13 +568,15 @@ def decodeMenuCommandCode(command):
                 return
                           
         try:
-            tftpClient = tftpy.TftpClient(ipAddress, 69)
+            fileSize = os.stat(fileName).st_size
+            tftpClient = tftpy.TftpClient(ipAddress, 69, options={'blksize': 512})
             print("\n   Updating. Please wait...")
-            tftpClient.upload('firmwareSTM32.bin', fileName, timeout = 10)
+            print("   Erasing flash...")
+            tftpClient.upload('firmwareSTM32.bin', fileName, packethook = progressBar, timeout = 20)
 
             retValue = 0
-        except tftpClient.timeout:
-            print( "\nNo response. Please, try again\n\n" )
+        except:
+            print( "\   nNo response. Please, try again\n\n" )
             print( "   ------------------------------------------")            
 
     elif( command == 10 ):
@@ -1104,8 +1121,8 @@ print( " +==============================================================+" )
 
 conEstablished = 0
 while ( conEstablished == 0 ):
-    #ipAddress = str( input( "   Enter IP of your device: " ) )
-    ipAddress = "192.168.1.10"
+    ipAddress = str( input( "   Enter IP of your device: " ) )
+    #ipAddress = "192.168.1.10"
     port = 7
     #port      = int( input( "   Enter UDP port of your device: " ) )
     ack       = []
